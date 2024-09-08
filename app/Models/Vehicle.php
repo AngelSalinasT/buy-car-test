@@ -14,4 +14,6 @@ class Vehicle extends Model
         'description',
         'price',
     ];
+
+    
 }
