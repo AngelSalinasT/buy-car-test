@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Vehicle;
 
+
 class VehicleController extends Controller
 {
     /**
@@ -24,19 +25,34 @@ class VehicleController extends Controller
         return view('show', compact('vehicle'));
     }
 
-    public function create()
-    {
+    public function create() {
         return view('create');
     }
 
-    public function store() {
+    public function store(Request $request) {
+        $vehicle = new Vehicle();
+        $vehicle->brand = $request->brand;
+        $vehicle->description = $request->description;
+        $vehicle->price = $request->price;
+        $vehicle->save();
 
+        return redirect()->route('show', $vehicle->id);
     }
 
     public function delete($id) {
         $vehicle = Vehicle::findOrFail($id);
         $vehicle->delete();
         return redirect()->route('index')->with('success', 'Vehicle deleted successfully!');
+    }
+
+    public function update(Request $request, $id) {
+        $vehicle = Vehicle::findOrFail($id);
+        $vehicle->brand = $request->brand;
+        $vehicle->description = $request->description;
+        $vehicle->price = $request->price;
+        $vehicle->save();
+
+        return redirect()->route('show', $vehicle->id);
     }
 
 }
