@@ -4,7 +4,7 @@
 
 @section('content')
     <h1 class="text-2xl font-bold mb-4">Show and edit vehicles</h1>
-    <form>
+    <form method="POST">
         <div class="container mx-auto justify-center ">
             <div class="mb-4">
                 <label for="brand" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Brand</label>
@@ -29,13 +29,16 @@
             <div>
                 <button type="submit"
                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Update</button>
-                <form action="{{ route('delete', $vehicle->id) }}" method="POST">
-                    @method('DELETE')
-                <button type="submit"
-                class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-500">Delete</button>
             </div>
 
         </div>
     </form>
-
+    <form action="{{ route('delete', $vehicle->id) }}" method="POST">
+        @csrf
+        @method('DELETE')
+        <button type="submit"
+            class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+            Delete
+        </button>
+    </form>
 @endsection
