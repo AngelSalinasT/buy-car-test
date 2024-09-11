@@ -46,13 +46,22 @@ class VehicleController extends Controller
     }
 
     public function update(Request $request, $id) {
-        $vehicle = Vehicle::findOrFail($id);
-        $vehicle->brand = $request->brand;
-        $vehicle->description = $request->description;
-        $vehicle->price = $request->price;
-        $vehicle->save();
+        // Validar los datos entrantes
+        $validatedData = $request->validate([
+            'brand' => 'required|string|max:255',
+            'description' => 'required|string',
+            'price' => 'required|numeric',
+        ]);
 
+        // Buscar el vehículo por ID
+        $vehicle = Vehicle::findOrFail($id);
+
+        // Actualizar los datos del vehículo utilizando el método update
+        $vehicle->update($validatedData);
+
+        // Redirigir a la vista de detalles del vehículo actualizado
         return redirect()->route('show', $vehicle->id);
     }
+
 
 }
